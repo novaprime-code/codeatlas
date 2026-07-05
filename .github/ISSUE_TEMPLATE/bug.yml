@@ -1,0 +1,78 @@
+name: Bug Report
+description: Report a bug in CodeAtlas
+title: "[Bug] "
+labels: ["type:bug"]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      description: Which package is affected?
+      options:
+        - codeatlas/contracts
+        - codeatlas/core
+        - codeatlas/scanner
+        - codeatlas/laravel
+        - codeatlas/analyzer-routes
+        - codeatlas/analyzer-controllers
+        - codeatlas/analyzer-middleware
+        - codeatlas/analyzer-services
+        - codeatlas/analyzer-repositories
+        - codeatlas/analyzer-models
+        - codeatlas/analyzer-events
+        - codeatlas/analyzer-jobs
+        - codeatlas/analyzer-policies
+        - codeatlas/analyzer-schedule
+        - codeatlas/exporter-json
+        - "@codeatlas/ui"
+        - "@codeatlas/desktop"
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to reproduce the bug
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should have happened?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+    validations:
+      required: true
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP Version
+      placeholder: "8.3.12"
+  - type: input
+    id: laravel-version
+    attributes:
+      label: Laravel Version
+      placeholder: "11.x"
+  - type: input
+    id: codeatlas-version
+    attributes:
+      label: CodeAtlas Version
+      placeholder: "0.1.0"
