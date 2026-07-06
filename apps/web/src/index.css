@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme */
+  --atlas-bg-primary: #ffffff;
+  --atlas-bg-secondary: #f8f9fb;
+  --atlas-bg-tertiary: #f1f3f7;
+  --atlas-bg-elevated: #ffffff;
+  --atlas-border: #e2e5eb;
+  --atlas-border-active: #c4c8d4;
+  --atlas-text-primary: #1a1c2e;
+  --atlas-text-secondary: #5c6078;
+  --atlas-text-muted: #9ca0b5;
+  --atlas-accent: #6366f1;
+  --atlas-accent-hover: #818cf8;
+  --atlas-accent-subtle: #6366f120;
+}
+
+.dark {
+  --atlas-bg-primary: #0f1117;
+  --atlas-bg-secondary: #161822;
+  --atlas-bg-tertiary: #1c1e2e;
+  --atlas-bg-elevated: #242640;
+  --atlas-border: #2a2d3e;
+  --atlas-border-active: #3d4065;
+  --atlas-text-primary: #e2e4f0;
+  --atlas-text-secondary: #8b8fa8;
+  --atlas-text-muted: #5c6078;
+}
+
+body {
+  @apply bg-atlas-bg-primary text-atlas-text-primary font-sans antialiased;
+  font-size: 0.875rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

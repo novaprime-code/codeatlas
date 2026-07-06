@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         failOnWarning="true"
+         failOnRisky="true"
+>
+    <testsuites>
+        <testsuite name="contracts">
+            <directory>packages/contracts/tests</directory>
+        </testsuite>
+        <testsuite name="core">
+            <directory>packages/core/tests</directory>
+        </testsuite>
+        <testsuite name="scanner">
+            <directory>packages/scanner/tests</directory>
+        </testsuite>
+        <testsuite name="laravel">
+            <directory>packages/laravel/tests</directory>
+        </testsuite>
+        <testsuite name="analyzer-routes">
+            <directory>packages/analyzers/routes/tests</directory>
+        </testsuite>
+        <testsuite name="exporter-json">
+            <directory>packages/exporters/json/tests</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>packages/contracts/src</directory>
+            <directory>packages/core/src</directory>
+            <directory>packages/scanner/src</directory>
+            <directory>packages/laravel/src</directory>
+            <directory>packages/analyzers/routes/src</directory>
+            <directory>packages/exporters/json/src</directory>
+        </include>
+    </source>
+</phpunit>
