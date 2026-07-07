@@ -1,0 +1,44 @@
+{
+  "name": "codeatlas/analyzer-routes",
+  "description": "CodeAtlas route analyzer — extracts Laravel routes via AST.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "codeatlas",
+    "analyzer",
+    "routes",
+    "laravel"
+  ],
+  "authors": [
+    {
+      "name": "Snova Labs",
+      "homepage": "https://github.com/novaprime-code"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "codeatlas/contracts": "@dev",
+    "codeatlas/core": "@dev"
+  },
+  "require-dev": {
+    "pestphp/pest": "^3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "CodeAtlas\\Analyzers\\Routes\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CodeAtlas\\Analyzers\\Routes\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}

@@ -1,0 +1,60 @@
+name: Task
+description: An implementation task with clear scope and acceptance criteria
+title: "[Task] "
+labels: ["type:task"]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      description: Which package does this task belong to?
+      options:
+        - codeatlas/contracts
+        - codeatlas/core
+        - codeatlas/scanner
+        - codeatlas/laravel
+        - codeatlas/analyzer-routes
+        - codeatlas/analyzer-controllers
+        - codeatlas/analyzer-middleware
+        - codeatlas/analyzer-services
+        - codeatlas/analyzer-repositories
+        - codeatlas/analyzer-models
+        - codeatlas/analyzer-events
+        - codeatlas/analyzer-jobs
+        - codeatlas/analyzer-policies
+        - codeatlas/analyzer-schedule
+        - codeatlas/exporter-json
+        - "@codeatlas/ui"
+        - "@codeatlas/desktop"
+        - Infrastructure / CI
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be done?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: How do we know this is done?
+      value: |
+        - [ ] 
+        - [ ] 
+        - [ ] 
+    validations:
+      required: true
+  - type: textarea
+    id: technical
+    attributes:
+      label: Technical Notes
+      description: Implementation hints, constraints, or references
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What must be completed before this task? Link issues with #number

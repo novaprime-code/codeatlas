@@ -1,0 +1,31 @@
+parameters:
+    level: max
+
+    paths:
+        - packages/contracts/src
+        - packages/contracts/tests
+        - packages/core/src
+        - packages/core/tests
+        - packages/scanner/src
+        - packages/scanner/tests
+        - packages/laravel/src
+        - packages/laravel/tests
+        - packages/analyzers/routes/src
+        - packages/analyzers/routes/tests
+        - packages/exporters/json/src
+        - packages/exporters/json/tests
+
+    tmpDir: .phpstan
+
+    treatPhpDocTypesAsCertain: false
+
+    reportUnmatchedIgnoredErrors: true
+
+    exceptions:
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+        implicitThrows: false
+        uncheckedExceptionClasses:
+            - 'LogicException'
+            - 'RuntimeException'
