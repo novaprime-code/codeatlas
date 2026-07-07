@@ -82,6 +82,9 @@
   "prefer-stable": true,
   "config": {
     "sort-packages": true,
+    "platform": {
+      "php": "8.3.0"
+    },
     "optimize-autoloader": true,
     "allow-plugins": {
       "pestphp/pest-plugin": true
