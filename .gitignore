@@ -21,7 +21,7 @@ apps/web/dist/
 apps/desktop/src-tauri/target/
 
 # =============================================================================
-# Testing & coverage
+# Testing & coverage 
 # =============================================================================
 coverage/
 .phpunit.result.cache
