@@ -55,6 +55,7 @@ cd codeatlas
 make install    # composer + pnpm install
 make check      # lint + analyze + test
 make help       # see all commands
+
 ```
 
 See [CONTRIBUTING.md](.claude/CONTRIBUTING.md) for the full development workflow.
