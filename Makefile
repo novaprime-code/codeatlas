@@ -109,7 +109,7 @@ clean: ## Remove all build artifacts and caches
 .PHONY: help
 help: ## Show this help
 	@echo ""
-	@echo "  CodeAtlas — Development Commands"
+	@echo " CodeAtlas — Development Commands"
 	@echo "  ================================="
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(CYAN)%-18s$(RESET) %s\n", $$1, $$2}'
