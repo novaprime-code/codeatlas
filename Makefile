@@ -107,7 +107,7 @@ clean: ## Remove all build artifacts and caches
 	find packages -name "vendor" -type d -exec rm -rf {} + 2>/dev/null || true
 
 .PHONY: help
-help: ## Show this help
+help: ##  Show this help
 	@echo ""
 	@echo " CodeAtlas — Development Commands"
 	@echo "  ================================="
