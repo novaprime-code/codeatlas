@@ -2,7 +2,9 @@
   "preset": "per",
   "rules": {
     "blank_line_before_statement": {
-      "statements": ["return"]
+      "statements": [
+        "return"
+      ]
     },
     "concat_space": {
       "spacing": "one"

@@ -16,6 +16,10 @@
     {
       "name": "Snova Labs",
       "homepage": "https://github.com/novaprime-code"
+    },
+    {
+      "name": "CodeAtlas Contributors",
+      "homepage": "https://github.com/CodeAtlas/contributors"
     }
   ],
   "require": {
