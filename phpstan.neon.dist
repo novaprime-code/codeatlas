@@ -29,3 +29,4 @@ parameters:
         uncheckedExceptionClasses:
             - 'LogicException'
             - 'RuntimeException'
+
