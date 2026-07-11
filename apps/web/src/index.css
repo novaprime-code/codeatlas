@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   /* Light theme */
   --atlas-bg-primary: #ffffff;

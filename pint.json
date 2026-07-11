@@ -2,9 +2,7 @@
   "preset": "per",
   "rules": {
     "blank_line_before_statement": {
-      "statements": [
-        "return"
-      ]
+      "statements": ["return"]
     },
     "concat_space": {
       "spacing": "one"
@@ -26,9 +24,7 @@
     },
     "single_quote": true,
     "final_class": false,
-    "phpdoc_align": {
-      "align": "left"
-    },
+    "phpdoc_align": { "align": "left" },
     "phpdoc_separation": true,
     "phpdoc_trim": true
   },
