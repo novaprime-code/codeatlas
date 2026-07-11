@@ -31,5 +31,6 @@ export default {
       ],
     ],
     'scope-empty': [1, 'never'],
+    
   },
 };
