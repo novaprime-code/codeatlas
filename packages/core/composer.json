@@ -1,45 +1,40 @@
 {
-  "name": "codeatlas/core",
-  "description": "CodeAtlas core engine — container, config, plugin loader, event bus, pipeline runner, and AST parser wrapper.",
-  "type": "library",
-  "license": "MIT",
-  "keywords": [
-    "codeatlas",
-    "core",
-    "static-analysis",
-    "ast"
-  ],
-  "authors": [
-    {
-      "name": "Snova Labs",
-      "homepage": "https://github.com/novaprime-code"
+    "name": "codeatlas/core",
+    "description": "CodeAtlas core engine — container, config, plugin loader, event bus, pipeline runner, and AST parser wrapper.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["codeatlas", "core", "static-analysis", "ast"],
+    "authors": [
+        {
+            "name": "Snova Labs",
+            "homepage": "https://github.com/novaprime-code"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "codeatlas/contracts": "@dev",
+        "nikic/php-parser": "^5.3",
+        "psr/log": "^3.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodeAtlas\\Core\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CodeAtlas\\Core\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
-  ],
-  "require": {
-    "php": "^8.3",
-    "codeatlas/contracts": "@dev",
-    "nikic/php-parser": "^5.3",
-    "psr/log": "^3.0"
-  },
-  "require-dev": {
-    "pestphp/pest": "^3.5"
-  },
-  "autoload": {
-    "psr-4": {
-      "CodeAtlas\\Core\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "CodeAtlas\\Core\\Tests\\": "tests/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
-    }
-  }
 }
