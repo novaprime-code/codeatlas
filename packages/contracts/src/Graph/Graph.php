@@ -79,11 +79,11 @@ final class Graph implements GraphInterface
     {
         return [
             'nodes' => array_map(
-                static fn (NodeInterface $node): array => $node->toArray(),
+                static fn(NodeInterface $node): array => $node->toArray(),
                 array_values($this->nodes),
             ),
             'edges' => array_map(
-                static fn (EdgeInterface $edge): array => $edge->toArray(),
+                static fn(EdgeInterface $edge): array => $edge->toArray(),
                 array_values($this->edges),
             ),
         ];

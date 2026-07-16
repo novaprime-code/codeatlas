@@ -13,7 +13,7 @@ describe('EdgeType', function (): void {
             'authorizes', 'schedules', 'migrates',
         ];
 
-        $actual = array_map(static fn (EdgeType $t): string => $t->value, EdgeType::cases());
+        $actual = array_map(static fn(EdgeType $t): string => $t->value, EdgeType::cases());
 
         expect($actual)->toEqualCanonicalizing($expected);
     });

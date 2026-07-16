@@ -29,8 +29,11 @@ describe('ProjectContext', function (): void {
 
     it('filters files by type', function (): void {
         $ctx = new ProjectContext(
-            name: 'demo', path: '/proj', framework: 'laravel',
-            frameworkVersion: null, phpVersion: null,
+            name: 'demo',
+            path: '/proj',
+            framework: 'laravel',
+            frameworkVersion: null,
+            phpVersion: null,
             files: [
                 makeFile('app/Models/User.php', FileType::Model),
                 makeFile('app/Models/Post.php', FileType::Model),
@@ -45,8 +48,11 @@ describe('ProjectContext', function (): void {
 
     it('reports file counts', function (): void {
         $ctx = new ProjectContext(
-            name: 'demo', path: '/proj', framework: 'laravel',
-            frameworkVersion: null, phpVersion: null,
+            name: 'demo',
+            path: '/proj',
+            framework: 'laravel',
+            frameworkVersion: null,
+            phpVersion: null,
             files: [
                 makeFile('app/Models/User.php', FileType::Model),
                 makeFile('routes/web.php', FileType::Route),
@@ -60,8 +66,12 @@ describe('ProjectContext', function (): void {
 
     it('serializes to array', function (): void {
         $ctx = new ProjectContext(
-            name: 'demo', path: '/proj', framework: 'laravel',
-            frameworkVersion: '11.x', phpVersion: '8.3.12', files: [],
+            name: 'demo',
+            path: '/proj',
+            framework: 'laravel',
+            frameworkVersion: '11.x',
+            phpVersion: '8.3.12',
+            files: [],
             autoloadPsr4: ['App\\' => 'app/'],
         );
 
