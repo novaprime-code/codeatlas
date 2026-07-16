@@ -62,7 +62,7 @@ final class Config implements ConfigInterface
         }
 
         $segments = explode('.', $key);
-        /** @var mixed $cursor */
+        /** @var array<string, mixed> */
         $cursor = $this->items;
 
         foreach ($segments as $segment) {
@@ -87,7 +87,7 @@ final class Config implements ConfigInterface
         }
 
         $segments = explode('.', $key);
-        /** @var mixed $cursor */
+        /** @var array<string, mixed> */
         $cursor = $this->items;
 
         foreach ($segments as $segment) {

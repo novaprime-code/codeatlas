@@ -157,7 +157,7 @@ final class ParsedFile implements ParsedFileInterface
                 foreach ($use->uses as $item) {
                     $tail = $item->name->toString();
                     $fqcn = $prefix . '\\' . $tail;
-                    $alias = $item->alias?->name ?? $this->basename($fqcn);
+                    $alias = $item->alias->name ?? $this->basename($fqcn);
                     $map[$alias] = $fqcn;
                 }
 
@@ -170,7 +170,7 @@ final class ParsedFile implements ParsedFileInterface
                 }
 
                 $fqcn = $item->name->toString();
-                $alias = $item->alias?->name ?? $this->basename($fqcn);
+                $alias = $item->alias->name ?? $this->basename($fqcn);
                 $map[$alias] = $fqcn;
             }
         }

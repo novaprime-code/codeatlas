@@ -41,6 +41,9 @@ final readonly class PipelineResult
         return $count;
     }
 
+    /**
+     * @return list<string>
+     */
     public function analyzerNames(): array
     {
         return array_map(
