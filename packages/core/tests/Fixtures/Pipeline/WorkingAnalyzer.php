@@ -14,9 +14,15 @@ use CodeAtlas\Contracts\ValueObjects\ProjectContext;
 
 final class WorkingAnalyzer implements AnalyzerInterface
 {
-    public function name(): string { return 'working'; }
+    public function name(): string
+    {
+        return 'working';
+    }
 
-    public function supportedNodeTypes(): array { return [NodeType::Route]; }
+    public function supportedNodeTypes(): array
+    {
+        return [NodeType::Route];
+    }
 
     public function analyze(ProjectContext $context): AnalysisResult
     {

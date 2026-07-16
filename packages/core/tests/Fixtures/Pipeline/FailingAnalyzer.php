@@ -12,9 +12,15 @@ use CodeAtlas\Contracts\ValueObjects\ProjectContext;
 
 final class FailingAnalyzer implements AnalyzerInterface
 {
-    public function name(): string { return 'failing'; }
+    public function name(): string
+    {
+        return 'failing';
+    }
 
-    public function supportedNodeTypes(): array { return [NodeType::Controller]; }
+    public function supportedNodeTypes(): array
+    {
+        return [NodeType::Controller];
+    }
 
     public function analyze(ProjectContext $context): AnalysisResult
     {

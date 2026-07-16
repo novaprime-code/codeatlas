@@ -11,6 +11,7 @@ use CodeAtlas\Contracts\ExporterInterface;
 use CodeAtlas\Contracts\PluginInterface;
 use ReflectionClass;
 use ReflectionException;
+use Throwable;
 
 /**
  * Discovers and registers CodeAtlas plugins.
@@ -65,7 +66,7 @@ final class PluginLoader
             /** @var PluginInterface $plugin */
             $plugin = $reflection->newInstance();
             $plugin->register($this->container);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             throw PluginException::registrationFailed($pluginClass, $e->getMessage());
         }
 

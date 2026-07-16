@@ -29,7 +29,7 @@ describe('Container — basic bindings', function (): void {
 
     it('resolves via a Closure factory', function (): void {
         $c = new Container();
-        $c->bind(RepositoryInterface::class, fn (): RepositoryInterface => new InMemoryRepository());
+        $c->bind(RepositoryInterface::class, fn(): RepositoryInterface => new InMemoryRepository());
 
         expect($c->make(RepositoryInterface::class))->toBeInstanceOf(InMemoryRepository::class);
     });

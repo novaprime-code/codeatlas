@@ -77,9 +77,15 @@ describe('PipelineRunner — events', function (): void {
         [$runner, $events] = pipelineHarness();
 
         $fired = [];
-        $events->listen(Events::PIPELINE_STARTED, function () use (&$fired): void { $fired[] = 'pipeline.started'; });
-        $events->listen(Events::SCAN_COMPLETED, function () use (&$fired): void { $fired[] = 'scan.completed'; });
-        $events->listen(Events::PIPELINE_COMPLETED, function () use (&$fired): void { $fired[] = 'pipeline.completed'; });
+        $events->listen(Events::PIPELINE_STARTED, function () use (&$fired): void {
+            $fired[] = 'pipeline.started';
+        });
+        $events->listen(Events::SCAN_COMPLETED, function () use (&$fired): void {
+            $fired[] = 'scan.completed';
+        });
+        $events->listen(Events::PIPELINE_COMPLETED, function () use (&$fired): void {
+            $fired[] = 'pipeline.completed';
+        });
 
         $runner->run('/fake');
 
@@ -90,7 +96,9 @@ describe('PipelineRunner — events', function (): void {
         [$runner, $events] = pipelineHarness();
 
         $errored = [];
-        $events->listen(Events::ANALYSIS_ERROR, function (string $name) use (&$errored): void { $errored[] = $name; });
+        $events->listen(Events::ANALYSIS_ERROR, function (string $name) use (&$errored): void {
+            $errored[] = $name;
+        });
 
         $runner->run('/fake');
 
@@ -103,7 +111,7 @@ describe('PipelineRunner — graph merging', function (): void {
         [$runner] = pipelineHarness();
         $result = $runner->run('/fake');
 
-        $ids = array_map(fn ($n) => $n->id(), $result->graph->nodes());
+        $ids = array_map(fn($n) => $n->id(), $result->graph->nodes());
         expect(count($ids))->toBe(count(array_unique($ids)));
     });
 });

@@ -11,7 +11,10 @@ use CodeAtlas\Contracts\ValueObjects\ExportOutput;
 
 final class FakeJsonExporter implements ExporterInterface
 {
-    public function name(): string { return 'json'; }
+    public function name(): string
+    {
+        return 'json';
+    }
 
     public function export(AnalysisResult $result, ExportConfig $config): ExportOutput
     {

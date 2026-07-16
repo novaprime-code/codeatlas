@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Core\Container;
 
+use Closure;
 use CodeAtlas\Contracts\ContainerInterface;
 use CodeAtlas\Contracts\Exceptions\ContainerException;
-use Closure;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionNamedType;
@@ -100,7 +100,7 @@ final class Container implements ContainerInterface
     {
         $abstracts = $this->tags[$tag] ?? [];
 
-        return array_map(fn (string $abstract): object => $this->make($abstract), $abstracts);
+        return array_map(fn(string $abstract): object => $this->make($abstract), $abstracts);
     }
 
     /**
@@ -147,7 +147,7 @@ final class Container implements ContainerInterface
         }
 
         $args = array_map(
-            fn (ReflectionParameter $param): mixed => $this->resolveParameter($param, $class),
+            fn(ReflectionParameter $param): mixed => $this->resolveParameter($param, $class),
             $constructor->getParameters(),
         );
 

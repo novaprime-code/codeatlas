@@ -12,9 +12,15 @@ use CodeAtlas\Contracts\ValueObjects\ProjectContext;
 
 final class SecondAnalyzer implements AnalyzerInterface
 {
-    public function name(): string { return 'second'; }
+    public function name(): string
+    {
+        return 'second';
+    }
 
-    public function supportedNodeTypes(): array { return [NodeType::Model]; }
+    public function supportedNodeTypes(): array
+    {
+        return [NodeType::Model];
+    }
 
     public function analyze(ProjectContext $context): AnalysisResult
     {

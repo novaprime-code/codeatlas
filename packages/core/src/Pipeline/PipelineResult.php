@@ -44,7 +44,7 @@ final readonly class PipelineResult
     public function analyzerNames(): array
     {
         return array_map(
-            static fn (AnalysisResult $r): string => $r->analyzer,
+            static fn(AnalysisResult $r): string => $r->analyzer,
             $this->results,
         );
     }

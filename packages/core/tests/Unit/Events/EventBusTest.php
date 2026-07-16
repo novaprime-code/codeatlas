@@ -13,7 +13,9 @@ describe('EventBus', function (): void {
     it('registers a listener and dispatches to it', function (): void {
         $bus = new EventBus();
         $got = null;
-        $bus->listen('x', function (mixed $payload) use (&$got): void { $got = $payload; });
+        $bus->listen('x', function (mixed $payload) use (&$got): void {
+            $got = $payload;
+        });
         $bus->dispatch('x', 'hello');
         expect($got)->toBe('hello');
     });
@@ -21,8 +23,12 @@ describe('EventBus', function (): void {
     it('fires listeners in registration order', function (): void {
         $bus = new EventBus();
         $order = [];
-        $bus->listen('y', function () use (&$order): void { $order[] = 1; });
-        $bus->listen('y', function () use (&$order): void { $order[] = 2; });
+        $bus->listen('y', function () use (&$order): void {
+            $order[] = 1;
+        });
+        $bus->listen('y', function () use (&$order): void {
+            $order[] = 2;
+        });
         $bus->dispatch('y');
         expect($order)->toBe([1, 2]);
     });
@@ -34,7 +40,7 @@ describe('EventBus', function (): void {
 
     it('forgets listeners for an event', function (): void {
         $bus = new EventBus();
-        $bus->listen('x', fn () => null);
+        $bus->listen('x', fn() => null);
         $bus->forget('x');
         expect($bus->hasListeners('x'))->toBeFalse();
     });
