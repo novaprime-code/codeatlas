@@ -6,6 +6,8 @@ namespace CodeAtlas\Contracts\ValueObjects;
 
 use CodeAtlas\Contracts\Enums\FileType;
 use InvalidArgumentException;
+use TypeError;
+use ValueError;
 
 /**
  * Reference to a discovered project file.
@@ -37,6 +39,10 @@ final readonly class FileReference
 
     /**
      * @param array<string, mixed> $data
+     *
+     * @throws InvalidArgumentException
+     * @throws ValueError
+     * @throws TypeError
      */
     public static function fromArray(array $data): self
     {
