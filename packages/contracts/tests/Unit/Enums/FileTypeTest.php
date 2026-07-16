@@ -14,7 +14,7 @@ describe('FileType', function (): void {
             'model', 'event', 'listener', 'job', 'notification', 'policy',
             'command', 'migration', 'factory', 'seeder', 'provider', 'config', 'view'];
 
-        $values = array_map(static fn (FileType $t): string => $t->value, FileType::cases());
+        $values = array_map(static fn(FileType $t): string => $t->value, FileType::cases());
 
         foreach ($required as $r) {
             expect($values)->toContain($r);

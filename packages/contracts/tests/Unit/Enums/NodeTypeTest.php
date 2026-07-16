@@ -19,7 +19,7 @@ describe('NodeType', function (): void {
             'migration', 'factory', 'seeder', 'provider', 'config', 'view',
         ];
 
-        $actual = array_map(static fn (NodeType $t): string => $t->value, NodeType::cases());
+        $actual = array_map(static fn(NodeType $t): string => $t->value, NodeType::cases());
 
         expect($actual)->toEqualCanonicalizing($expected);
     });

@@ -64,16 +64,16 @@ final readonly class AnalysisResult
         return [
             'analyzer' => $this->analyzer,
             'nodes' => array_map(
-                static fn (NodeInterface $node): array => $node->toArray(),
+                static fn(NodeInterface $node): array => $node->toArray(),
                 $this->nodes,
             ),
             'edges' => array_map(
-                static fn (EdgeInterface $edge): array => $edge->toArray(),
+                static fn(EdgeInterface $edge): array => $edge->toArray(),
                 $this->edges,
             ),
             'metadata' => $this->metadata,
             'errors' => array_map(
-                static fn (AnalysisError $error): array => $error->toArray(),
+                static fn(AnalysisError $error): array => $error->toArray(),
                 $this->errors,
             ),
         ];

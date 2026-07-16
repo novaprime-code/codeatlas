@@ -34,7 +34,7 @@ final readonly class ProjectContext
     {
         return array_values(array_filter(
             $this->files,
-            static fn (FileReference $file): bool => $file->type === $type,
+            static fn(FileReference $file): bool => $file->type === $type,
         ));
     }
 
@@ -72,7 +72,7 @@ final readonly class ProjectContext
             'autoload_psr4' => $this->autoloadPsr4,
             'file_counts' => $this->fileCounts(),
             'files' => array_map(
-                static fn (FileReference $file): array => $file->toArray(),
+                static fn(FileReference $file): array => $file->toArray(),
                 $this->files,
             ),
         ];
