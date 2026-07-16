@@ -79,15 +79,26 @@ final readonly class Node implements NodeInterface
         $file = $data['file'] ?? null;
         $metadata = $data['metadata'] ?? [];
         $tags = $data['tags'] ?? [];
+
         $group = $data['group'] ?? null;
+
+        $fileRaw = $data['file'] ?? null;
+        /** @var array<string, mixed> $fileData */
+        $fileData = is_array($fileRaw) ? $fileRaw : [];
+
+        $metadataRaw = $data['metadata'] ?? [];
+        /** @var array<string, mixed> $metadataData */
+        $metadataData = is_array($metadataRaw) ? $metadataRaw : [];
+
+        $tags = $data['tags'] ?? [];
 
         return new self(
             id: $id,
             type: NodeType::from($type),
             label: $label,
             group: is_string($group) ? $group : null,
-            file: is_array($file) ? FileReference::fromArray($file) : null,
-            metadata: is_array($metadata) ? $metadata : [],
+            file: is_array($fileRaw) ? FileReference::fromArray($fileData) : null,
+            metadata: $metadataData,
             tags: is_array($tags) ? array_values(array_filter($tags, is_string(...))) : [],
         );
     }
