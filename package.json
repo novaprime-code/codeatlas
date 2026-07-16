@@ -33,7 +33,7 @@
       "pnpm --filter @codeatlas/web exec eslint --fix"
     ],
     "*.{json,md,yml,yaml}": [
-      "pnpm --filter @codeatlas/web exec prettier --write "
+      "pnpm --filter @codeatlas/web exec prettier --write"
     ]
   }
 }

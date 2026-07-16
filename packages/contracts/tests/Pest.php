@@ -2,8 +2,4 @@
 
 declare(strict_types=1);
 
-/*
-|--------------------------------------------------------------------------
-| Pest Configuration — codeatlas/contracts
-|--------------------------------------------------------------------------
-*/
+pest()->extend(PHPUnit\Framework\TestCase::class)->in('Unit');
