@@ -7,7 +7,7 @@ namespace CodeAtlas\Contracts\ValueObjects;
 /**
  * Configuration passed to an exporter.
  *
- * @phpstan-type ExportOptions array<string, scalar|array|null>
+ * @phpstan-type ExportOptions array<string, scalar|array<string, mixed>|null>
  */
 final readonly class ExportConfig
 {
@@ -17,6 +17,8 @@ final readonly class ExportConfig
     public function __construct(
         public bool $prettyPrint = true,
         public ?string $outputPath = null,
+
+        /** @var ExportOptions */
         public array $options = [],
     ) {}
 

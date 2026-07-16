@@ -6,6 +6,8 @@ namespace CodeAtlas\Contracts\Graph;
 
 use CodeAtlas\Contracts\Enums\EdgeType;
 use InvalidArgumentException;
+use TypeError;
+use ValueError;
 
 /**
  * Default immutable edge implementation.
@@ -52,6 +54,10 @@ final readonly class Edge implements EdgeInterface
 
     /**
      * @param array<string, mixed> $data
+     *
+     * @throws InvalidArgumentException When required string keys are missing or non-string.
+     * @throws ValueError When `type` is not a valid EdgeType case.
+     * @throws TypeError When `type` is not a valid scalar for BackedEnum::from().
      */
     public static function fromArray(array $data): self
     {
@@ -65,7 +71,9 @@ final readonly class Edge implements EdgeInterface
         }
 
         $label = $data['label'] ?? null;
-        $metadata = $data['metadata'] ?? [];
+        $metadataRaw = $data['metadata'] ?? [];
+        /** @var array<string, mixed> $metadata */
+        $metadata = is_array($metadataRaw) ? $metadataRaw : [];
 
         return new self(
             id: $id,
