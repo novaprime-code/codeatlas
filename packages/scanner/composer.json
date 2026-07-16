@@ -8,6 +8,10 @@
         {
             "name": "Snova Labs",
             "homepage": "https://github.com/novaprime-code"
+    },
+    {
+      "name": "Snova Code",
+      "homepage": "https://github.com/snova-code"
         }
     ],
     "require": {
