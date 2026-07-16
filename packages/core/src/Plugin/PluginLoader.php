@@ -10,7 +10,6 @@ use CodeAtlas\Contracts\Exceptions\PluginException;
 use CodeAtlas\Contracts\ExporterInterface;
 use CodeAtlas\Contracts\PluginInterface;
 use ReflectionClass;
-use ReflectionException;
 use Throwable;
 
 /**
@@ -52,11 +51,7 @@ final class PluginLoader
             throw PluginException::classNotFound($pluginClass);
         }
 
-        try {
-            $reflection = new ReflectionClass($pluginClass);
-        } catch (ReflectionException) {
-            throw PluginException::classNotFound($pluginClass);
-        }
+        $reflection = new ReflectionClass($pluginClass);
 
         if (!$reflection->implementsInterface(PluginInterface::class)) {
             throw PluginException::doesNotImplementInterface($pluginClass);

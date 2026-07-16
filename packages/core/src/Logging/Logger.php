@@ -29,7 +29,7 @@ final class Logger extends AbstractLogger
         LogLevel::EMERGENCY => 600,
     ];
 
-    private ?LoggerSink $sink;
+    private LoggerSink $sink;
 
     public function __construct(
         private readonly string $minLevel = LogLevel::DEBUG,
@@ -62,7 +62,7 @@ final class Logger extends AbstractLogger
         }
 
         $formatted = $this->format($levelKey, (string) $message, $context);
-        $this->sink?->write($formatted);
+        $this->sink->write($formatted);
     }
 
     /**
