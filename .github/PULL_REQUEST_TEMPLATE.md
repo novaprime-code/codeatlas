@@ -35,4 +35,4 @@
 
 ## Screenshots / Output
 
-<!-- Snova If applicable, show the result -->
+<!-- If applicable, show the result -->
