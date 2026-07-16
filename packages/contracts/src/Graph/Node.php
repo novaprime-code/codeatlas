@@ -7,6 +7,8 @@ namespace CodeAtlas\Contracts\Graph;
 use CodeAtlas\Contracts\Enums\NodeType;
 use CodeAtlas\Contracts\ValueObjects\FileReference;
 use InvalidArgumentException;
+use TypeError;
+use ValueError;
 
 /**
  * Default immutable node implementation.
@@ -58,7 +60,11 @@ final readonly class Node implements NodeInterface
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<string,mixed> $data
+     *
+     * @throws InvalidArgumentException
+     * @throws ValueError
+     * @throws TypeError
      */
     public static function fromArray(array $data): self
     {
