@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Domain;
+
+interface Contract {}
+
+trait Traity {}
+
+enum Status: string {
+    case Active = 'active';
+}
+
+class Product {}
