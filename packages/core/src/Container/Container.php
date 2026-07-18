@@ -24,27 +24,27 @@ use ReflectionParameter;
  */
 final class Container implements ContainerInterface
 {
-    /** @var array<class-string, Binding> */
+    /** @var array<string, Binding> */
     private array $bindings = [];
 
-    /** @var array<class-string, object> */
+    /** @var array<string, object> */
     private array $instances = [];
 
     /** @var array<string, list<class-string>> */
     private array $tags = [];
 
-    /** @var array<class-string, true> */
+    /** @var array<string, true> */
     private array $resolving = [];
 
     public function bind(string $abstract, string|callable $concrete): void
     {
-        $this->bindings[$abstract] = new Binding($concrete, shared: false);
+        $this->bindings[$abstract] = new Binding($this->normalizeConcrete($concrete), shared: false);
         unset($this->instances[$abstract]);
     }
 
     public function singleton(string $abstract, string|callable $concrete): void
     {
-        $this->bindings[$abstract] = new Binding($concrete, shared: true);
+        $this->bindings[$abstract] = new Binding($this->normalizeConcrete($concrete), shared: true);
         unset($this->instances[$abstract]);
     }
 
@@ -59,9 +59,17 @@ final class Container implements ContainerInterface
         return isset($this->bindings[$abstract]) || isset($this->instances[$abstract]) || class_exists($abstract);
     }
 
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $abstract
+     *
+     * @return T
+     */
     public function make(string $abstract): object
     {
         if (isset($this->instances[$abstract])) {
+            /** @var T */
             return $this->instances[$abstract];
         }
 
@@ -81,6 +89,7 @@ final class Container implements ContainerInterface
                 $this->instances[$abstract] = $object;
             }
 
+            /** @var T */
             return $object;
         } finally {
             unset($this->resolving[$abstract]);
@@ -98,9 +107,18 @@ final class Container implements ContainerInterface
 
     public function tagged(string $tag): array
     {
-        $abstracts = $this->tags[$tag] ?? [];
+        $resolved = [];
 
-        return array_map(fn(string $abstract): object => $this->make($abstract), $abstracts);
+        foreach ($this->tags[$tag] ?? [] as $abstract) {
+            $resolved[] = $this->make($abstract);
+        }
+
+        return $resolved;
+    }
+
+    private function normalizeConcrete(string|callable $concrete): string|Closure
+    {
+        return is_string($concrete) ? $concrete : Closure::fromCallable($concrete);
     }
 
     /**
@@ -110,8 +128,7 @@ final class Container implements ContainerInterface
     {
         $concrete = $binding->concrete;
 
-        if ($concrete instanceof Closure || (is_callable($concrete) && !is_string($concrete))) {
-            /** @var callable(self): object $concrete */
+        if ($concrete instanceof Closure) {
             $result = $concrete($this);
 
             if (!is_object($result)) {
@@ -130,11 +147,11 @@ final class Container implements ContainerInterface
      */
     private function build(string $class): object
     {
-        try {
-            $reflection = new ReflectionClass($class);
-        } catch (ReflectionException $e) {
+        if (!class_exists($class)) {
             throw ContainerException::notBound($class);
         }
+
+        $reflection = new ReflectionClass($class);
 
         if (!$reflection->isInstantiable()) {
             throw ContainerException::notBound($class);
@@ -169,7 +186,11 @@ final class Container implements ContainerInterface
         }
 
         if ($param->isDefaultValueAvailable()) {
-            return $param->getDefaultValue();
+            try {
+                return $param->getDefaultValue();
+            } catch (ReflectionException) {
+                throw ContainerException::unresolvableParameter($forClass, $param->getName());
+            }
         }
 
         if ($param->allowsNull()) {

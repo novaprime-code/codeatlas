@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Core\Container;
 
+use Closure;
+
 /**
  * Internal container binding record.
  */
 final readonly class Binding
 {
-    /**
-     * @param class-string|callable $concrete
-     */
     public function __construct(
-        public string|object $concrete,
+        public Closure|string $concrete,
         public bool $shared,
     ) {}
 }

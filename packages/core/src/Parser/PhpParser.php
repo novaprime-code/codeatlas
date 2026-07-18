@@ -7,7 +7,7 @@ namespace CodeAtlas\Core\Parser;
 use CodeAtlas\Contracts\Exceptions\ParserException;
 use CodeAtlas\Contracts\ParsedFileInterface;
 use CodeAtlas\Contracts\ParserInterface;
-use PhpParser\Error as PhpParserError;
+use PhpParser\ErrorHandler\Collecting;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
 
@@ -52,13 +52,14 @@ final class PhpParser implements ParserInterface
             return $this->cache[$cacheKey];
         }
 
-        try {
-            $ast = $this->parser->parse($source) ?? [];
-        } catch (PhpParserError $e) {
-            throw ParserException::syntaxError($filePath, $e->getMessage(), $e);
+        $errorHandler = new Collecting();
+        $ast = $this->parser->parse($source, $errorHandler);
+
+        foreach ($errorHandler->getErrors() as $error) {
+            throw ParserException::syntaxError($filePath, $error->getMessage(), $error);
         }
 
-        $parsed = new ParsedFile($filePath, $ast);
+        $parsed = new ParsedFile($filePath, array_values($ast ?? []));
         $this->cache[$cacheKey] = $parsed;
 
         return $parsed;
@@ -72,13 +73,14 @@ final class PhpParser implements ParserInterface
             return $this->cache[$cacheKey];
         }
 
-        try {
-            $ast = $this->parser->parse($code) ?? [];
-        } catch (PhpParserError $e) {
-            throw ParserException::syntaxError($virtualPath, $e->getMessage(), $e);
+        $errorHandler = new Collecting();
+        $ast = $this->parser->parse($code, $errorHandler);
+
+        foreach ($errorHandler->getErrors() as $error) {
+            throw ParserException::syntaxError($virtualPath, $error->getMessage(), $error);
         }
 
-        $parsed = new ParsedFile($virtualPath, $ast);
+        $parsed = new ParsedFile($virtualPath, array_values($ast ?? []));
         $this->cache[$cacheKey] = $parsed;
 
         return $parsed;
