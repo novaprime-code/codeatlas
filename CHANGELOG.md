@@ -7,27 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added — Phase 1 Core (Sprint 1.2)
+### Added — Phase 2 Scanner (Sprint 2.1)
 
-- **Container** (`CodeAtlas\Core\Container`): reflection-based auto-resolution, tagged bindings, singleton/instance/factory registration, circular dependency detection
-- **Config** (`CodeAtlas\Core\Config`): array + PHP file loading, deep merge, dot-notation get/set/has
-- **EventBus** (`CodeAtlas\Core\Events`): sync in-process events with registration-order dispatch + canonical `Events` constants
-- **Logger** (`CodeAtlas\Core\Logging`): PSR-3 compliant, level filtering, `{placeholder}` interpolation, pluggable `LoggerSink` (stderr, file, null)
-- **PhpParser** (`CodeAtlas\Core\Parser`): `nikic/php-parser` v5 wrapper with content-hash caching
-- **ParsedFile**: immutable AST result with namespace, use statement extraction (including grouped uses), class-like discovery, FQCN resolution, and `findNodes()` traversal helper
-- **PluginLoader** (`CodeAtlas\Core\Plugin`): idempotent plugin registration, automatic analyzer/exporter tagging
-- **PipelineRunner** (`CodeAtlas\Core\Pipeline`): full Scanner → Analyzers → Exporters orchestration with event dispatch, analyzer failure isolation, and per-run duration tracking
-- **PipelineResult**: value object carrying context, per-analyzer results, merged Graph, exports, and metadata
+- **Scanner** (`CodeAtlas\Scanner\Scanner`): top-level file discovery with path validation, ProjectContext assembly, and a `Scanner::default()` factory
+- **DirectoryWalker** (`CodeAtlas\Scanner\Discovery`): lazy Symfony Finder traversal with configurable paths, glob-based exclusions, and extension filtering
+- **FileClassifier** (`CodeAtlas\Scanner\Classification`): pure prefix-based path → FileType classification with support for custom overrides
+- **ComposerReader** + **ComposerMetadata** (`CodeAtlas\Scanner\Framework`): safe composer.json parsing with `tryRead` (missing = null) and `read` (missing/malformed = ScannerException)
+- **FrameworkDetector** + **FrameworkResult**: Laravel detection requires both `artisan` file AND `laravel/framework` in composer dependencies
+- Three fixture projects (minimal Laravel 11, empty, non-Laravel) with 22 discoverable files total
+- 5 test files covering classification, composer parsing, framework detection, and end-to-end scanner behaviour
+
+### Changed
+
+- `CodeAtlas\Contracts\ValueObjects\ScanConfig::default()` now includes `resources` in scan paths, per ARCHITECTURE.md's discovery list — Blade views were previously missed
+- `CodeAtlas\Contracts\Exceptions\ScannerException` gains `composerNotReadable()` and `composerInvalidJson()` named constructors
+
+### Added — Phase 1 Core (Sprint 1.2)
+- Container, Config, EventBus, Logger, PhpParser (with grouped-use support), PluginLoader, PipelineRunner
+- 25 test files across 8 subsystems
 
 ### Added — Phase 1 Contracts (Sprint 1.1)
-
 - 8 interfaces, 4 enums, 6 graph primitives, 7 value objects, 8-class exception hierarchy
-- 15 test files
 
 ### Added — Phase 0 Infrastructure (Sprint 0.1)
-
-- Monorepo scaffolding (Composer path repos + PNPM workspaces + Turborepo)
-- All 6 PHP package skeletons
-- Frontend skeleton with strict TypeScript, Tailwind, React Flow, Monaco, TanStack Query, Zustand
-- Tooling: Pint (PER), PHPStan level max, Rector PHP 8.3, Pest
-- CI matrix (PHP 8.3 + 8.4), Husky + lint-staged, Commitlint, project management setup
+- Full monorepo scaffolding, tooling, CI, git hooks, project management setup
