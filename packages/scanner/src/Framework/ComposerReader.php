@@ -59,6 +59,7 @@ final class ComposerReader
             throw ScannerException::composerInvalidJson($path, 'expected JSON object at root');
         }
 
+        /** @var array<string, mixed> $decoded */
         return ComposerMetadata::fromArray($decoded);
     }
 

@@ -57,13 +57,13 @@ final class Scanner implements ScannerInterface
         $files = iterator_to_array($this->walker->walk($normalized, $config), false);
 
         return new ProjectContext(
-            name: $composer?->name ?? basename($normalized),
+            name: $composer->name ?? basename($normalized),
             path: $normalized,
             framework: $framework->framework,
             frameworkVersion: $framework->version,
             phpVersion: $composer?->phpRequirement,
             files: $files,
-            autoloadPsr4: $composer?->autoloadPsr4 ?? [],
+            autoloadPsr4: $composer->autoloadPsr4 ?? [],
         );
     }
 
