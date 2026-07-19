@@ -64,6 +64,6 @@ final class ComposerReader
 
     private function composerPath(string $projectPath): string
     {
-        return rtrim($projectPath, "/\\") . '/composer.json';
+        return rtrim($projectPath, '/\\') . '/composer.json';
     }
 }

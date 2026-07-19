@@ -37,10 +37,10 @@ describe('Scanner — full Laravel fixture', function (): void {
 
     it('excludes vendor/ and tests/ from results', function (): void {
         $ctx = Scanner::default()->scan(fx('laravel-app'));
-        $paths = array_map(fn ($f) => $f->path, $ctx->files);
+        $paths = array_map(fn($f) => $f->path, $ctx->files);
 
-        expect(array_filter($paths, fn ($p) => str_starts_with($p, 'vendor/')))->toBe([]);
-        expect(array_filter($paths, fn ($p) => str_starts_with($p, 'tests/')))->toBe([]);
+        expect(array_filter($paths, fn($p) => str_starts_with($p, 'vendor/')))->toBe([]);
+        expect(array_filter($paths, fn($p) => str_starts_with($p, 'tests/')))->toBe([]);
     });
 
     it('filesOfType returns the right subset', function (): void {

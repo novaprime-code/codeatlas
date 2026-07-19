@@ -20,7 +20,7 @@ final class FrameworkDetector
 
     public function detect(string $projectPath, ?ComposerMetadata $composer): FrameworkResult
     {
-        $artisan = rtrim($projectPath, "/\\") . '/artisan';
+        $artisan = rtrim($projectPath, '/\\') . '/artisan';
         $hasArtisan = is_file($artisan);
 
         if ($composer?->requiresPackage('laravel/framework') === true && $hasArtisan) {
