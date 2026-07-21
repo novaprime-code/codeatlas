@@ -144,7 +144,13 @@ final class DirectoryWalker
 
     private function normalizeProjectPath(string $projectPath): string
     {
-        return rtrim(str_replace('\\', '/', $projectPath), '/');
+        $resolved = realpath($projectPath);
+
+        if ($resolved === false) {
+            $resolved = $projectPath;
+        }
+
+        return rtrim(str_replace('\\', '/', $resolved), '/');
     }
 
     private function relativize(string $projectPath, string $absolutePath): string
