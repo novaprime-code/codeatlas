@@ -15,8 +15,8 @@ final readonly class ScanConfig
      * @param list<string> $fileExtensions File extensions to include (with leading dot)
      */
     public function __construct(
-        public array $paths = ['app', 'routes', 'config', 'database', 'bootstrap'],
-        public array $excludePatterns = ['vendor', 'node_modules', 'storage', '.git', 'tests'],
+        public array $paths = ['app', 'routes', 'config', 'database', 'bootstrap', 'resources'],
+        public array $excludePatterns = ['vendor', 'node_modules', 'storage', '.git', 'tests','public'],
         public array $fileExtensions = ['.php'],
     ) {}
 
