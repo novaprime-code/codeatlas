@@ -10,7 +10,7 @@ use CodeAtlas\Scanner\Scanner;
 
 describe('JSON round-trip through the full pipeline', function (): void {
     it('produces a schema-conformant document from a real Laravel fixture', function (): void {
-        $appPath = dirname(__DIR__, 3) . '/analyzers/routes/tests/Fixtures/integration-app';
+        $appPath = dirname(__DIR__, 4) . '/analyzers/routes/tests/Fixtures/integration-app';
 
         $context = Scanner::default()->scan($appPath);
         $result = (new RouteAnalyzer(new PhpParser()))->analyze($context);

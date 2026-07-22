@@ -6,8 +6,8 @@ namespace CodeAtlas\Exporters\Json;
 
 use CodeAtlas\Contracts\Exceptions\ExporterException;
 use CodeAtlas\Contracts\ExporterInterface;
-use CodeAtlas\Contracts\Graph\Edge;
-use CodeAtlas\Contracts\Graph\Node;
+use CodeAtlas\Contracts\Graph\EdgeInterface;
+use CodeAtlas\Contracts\Graph\NodeInterface;
 use CodeAtlas\Contracts\ValueObjects\AnalysisError;
 use CodeAtlas\Contracts\ValueObjects\AnalysisResult;
 use CodeAtlas\Contracts\ValueObjects\ExportConfig;
@@ -67,7 +67,6 @@ final class JsonExporter implements ExporterInterface
         ];
 
         $flags = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR;
-
         if ($config->prettyPrint) {
             $flags |= JSON_PRETTY_PRINT;
         }
@@ -91,7 +90,6 @@ final class JsonExporter implements ExporterInterface
     private function projectBlock(ExportConfig $config): array
     {
         $project = $config->options['project'] ?? [];
-
         if (!is_array($project)) {
             $project = [];
         }
@@ -127,11 +125,11 @@ final class JsonExporter implements ExporterInterface
     {
         return [
             'nodes' => array_map(
-                fn(Node $node): array => $this->normalizeNode($node->toArray()),
+                fn(NodeInterface $node): array => $this->normalizeNode($node->toArray()),
                 $result->nodes,
             ),
             'edges' => array_map(
-                fn(Edge $edge): array => $this->normalizeEdge($edge->toArray()),
+                fn(EdgeInterface $edge): array => $this->normalizeEdge($edge->toArray()),
                 $result->edges,
             ),
         ];
@@ -150,7 +148,6 @@ final class JsonExporter implements ExporterInterface
     private function normalizeNode(array $node): array
     {
         $node['metadata'] = $this->mapOrObject($node['metadata'] ?? []);
-
         if (is_array($node['metadata'])) {
             foreach (['where'] as $mapKey) {
                 if (isset($node['metadata'][$mapKey]) && $node['metadata'][$mapKey] === []) {
