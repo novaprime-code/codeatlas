@@ -99,12 +99,12 @@ describe('RouteExtractor — resource routes', function (): void {
     $routes = extractFrom('resource');
 
     it('expands resource() into 7 routes', function () use ($routes): void {
-        $photos = array_filter($routes, fn (RouteData $r): bool => str_contains($r->uri, 'photos'));
+        $photos = array_filter($routes, fn(RouteData $r): bool => str_contains($r->uri, 'photos'));
         expect($photos)->toHaveCount(7);
     });
 
     it('expands apiResource() into 5 routes (no create/edit)', function () use ($routes): void {
-        $comments = array_filter($routes, fn (RouteData $r): bool => str_contains($r->uri, 'comments'));
+        $comments = array_filter($routes, fn(RouteData $r): bool => str_contains($r->uri, 'comments'));
         expect($comments)->toHaveCount(5);
         expect($routes)->not->toHaveKey('GET /comments/{comment}/edit');
     });

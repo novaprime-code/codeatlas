@@ -31,8 +31,8 @@ describe('RouteAnalyzer — full pipeline', function (): void {
         $context = Scanner::default()->scan(appPath());
         $result = (new RouteAnalyzer(new PhpParser()))->analyze($context);
 
-        $routesTo = array_filter($result->edges, fn ($e): bool => $e->type() === EdgeType::RoutesTo);
-        $usesMw = array_filter($result->edges, fn ($e): bool => $e->type() === EdgeType::UsesMiddleware);
+        $routesTo = array_filter($result->edges, fn($e): bool => $e->type() === EdgeType::RoutesTo);
+        $usesMw = array_filter($result->edges, fn($e): bool => $e->type() === EdgeType::UsesMiddleware);
 
         expect($routesTo)->not->toBeEmpty();
         expect($usesMw)->not->toBeEmpty();
@@ -42,7 +42,7 @@ describe('RouteAnalyzer — full pipeline', function (): void {
         $context = Scanner::default()->scan(appPath());
         $result = (new RouteAnalyzer(new PhpParser()))->analyze($context);
 
-        $ids = array_map(fn ($n): string => $n->id(), $result->nodes);
+        $ids = array_map(fn($n): string => $n->id(), $result->nodes);
         expect($ids)->toContain('route::get::/users', 'route::get::/api/users');
         expect(count($ids))->toBe(count(array_unique($ids)));
     });
