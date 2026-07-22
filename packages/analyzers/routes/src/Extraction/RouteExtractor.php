@@ -391,7 +391,7 @@ final class RouteExtractor
      */
     private function extractWhere(array $args): array
     {
-        if (isset($args[0]) && $args[0]->value instanceof \PhpParser\Node\Expr\Array_) {
+        if (isset($args[0]) && $args[0]->value instanceof Expr\Array_) {
             return $this->values->stringMapArg($args[0]);
         }
 
@@ -445,14 +445,14 @@ final class RouteExtractor
     private function extractGroupArrayConfig(array $args): ?array
     {
         foreach ($args as $arg) {
-            if (!$arg->value instanceof \PhpParser\Node\Expr\Array_) {
+            if (!$arg->value instanceof Expr\Array_) {
                 continue;
             }
 
             $config = [];
 
             foreach ($arg->value->items as $item) {
-                if (!$item instanceof \PhpParser\Node\Expr\ArrayItem || $item->key === null) {
+                if (!$item instanceof Expr\ArrayItem || $item->key === null) {
                     continue;
                 }
 
@@ -474,9 +474,9 @@ final class RouteExtractor
                         $config['domain'] = $val;
                     }
                 } elseif ($key === 'middleware') {
-                    if ($item->value instanceof \PhpParser\Node\Scalar\String_) {
+                    if ($item->value instanceof Node\Scalar\String_) {
                         $config['middleware'] = [$item->value->value];
-                    } elseif ($item->value instanceof \PhpParser\Node\Expr\Array_) {
+                    } elseif ($item->value instanceof Expr\Array_) {
                         $config['middleware'] = $this->values->stringListFromArray($item->value);
                     }
                 }

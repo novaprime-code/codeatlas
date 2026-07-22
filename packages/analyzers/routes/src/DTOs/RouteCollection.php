@@ -43,7 +43,7 @@ final readonly class RouteCollection
     public function toArray(): array
     {
         return array_map(
-            static fn (RouteData $route): array => $route->toArray(),
+            static fn(RouteData $route): array => $route->toArray(),
             $this->routes,
         );
     }

@@ -28,7 +28,7 @@ final class ChainUnwinder
 {
     /**
      * @return list<array{name: string, args: list<\PhpParser\Node\Arg>}>|null
-     *   Null when the expression is not a static-rooted call chain.
+     *                                                                         Null when the expression is not a static-rooted call chain.
      */
     public function unwind(Expr $expr): ?array
     {

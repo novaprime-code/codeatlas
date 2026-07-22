@@ -6,7 +6,6 @@ namespace CodeAtlas\Analyzers\Routes\Extraction;
 
 use CodeAtlas\Contracts\ParsedFileInterface;
 use PhpParser\Node\Arg;
-use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ArrowFunction;
@@ -65,7 +64,7 @@ final class ActionResolver
     {
         $items = array_values(array_filter(
             $array->items,
-            static fn ($item): bool => $item instanceof ArrayItem,
+            static fn($item): bool => $item instanceof ArrayItem,
         ));
 
         $controller = null;
