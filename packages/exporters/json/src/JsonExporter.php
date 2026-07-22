@@ -15,6 +15,7 @@ use CodeAtlas\Contracts\ValueObjects\ExportOutput;
 use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
+use stdClass;
 
 /**
  * The canonical JSON exporter.
@@ -126,11 +127,11 @@ final class JsonExporter implements ExporterInterface
     {
         return [
             'nodes' => array_map(
-                fn (Node $node): array => $this->normalizeNode($node->toArray()),
+                fn(Node $node): array => $this->normalizeNode($node->toArray()),
                 $result->nodes,
             ),
             'edges' => array_map(
-                fn (Edge $edge): array => $this->normalizeEdge($edge->toArray()),
+                fn(Edge $edge): array => $this->normalizeEdge($edge->toArray()),
                 $result->edges,
             ),
         ];
@@ -153,7 +154,7 @@ final class JsonExporter implements ExporterInterface
         if (is_array($node['metadata'])) {
             foreach (['where'] as $mapKey) {
                 if (isset($node['metadata'][$mapKey]) && $node['metadata'][$mapKey] === []) {
-                    $node['metadata'][$mapKey] = new \stdClass();
+                    $node['metadata'][$mapKey] = new stdClass();
                 }
             }
         }
@@ -175,7 +176,7 @@ final class JsonExporter implements ExporterInterface
 
     private function mapOrObject(mixed $value): mixed
     {
-        return $value === [] ? new \stdClass() : $value;
+        return $value === [] ? new stdClass() : $value;
     }
 
     /**
@@ -204,7 +205,7 @@ final class JsonExporter implements ExporterInterface
     private function errorsBlock(AnalysisResult $result): array
     {
         return array_map(
-            static fn (AnalysisError $error): array => $error->toArray(),
+            static fn(AnalysisError $error): array => $error->toArray(),
             $result->errors,
         );
     }
