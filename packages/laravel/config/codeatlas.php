@@ -3,58 +3,38 @@
 declare(strict_types=1);
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Scan Paths
     |--------------------------------------------------------------------------
-    | Directories to scan, relative to the project root.
+    | Project-relative directories CodeAtlas will discover files in.
+    | Null uses the built-in defaults (app, routes, config, database,
+    | bootstrap, resources).
     */
-    'scan_paths' => [
-        'app',
-        'routes',
-        'config',
-        'database',
-        'bootstrap',
-    ],
+    'scan_paths' => null,
 
     /*
     |--------------------------------------------------------------------------
-    | Exclude Paths
+    | Exclusions
     |--------------------------------------------------------------------------
-    | Glob patterns to exclude from scanning.
+    | Directory names or glob patterns to skip. Null uses the defaults
+    | (vendor, node_modules, storage, .git, tests).
     */
-    'exclude_paths' => [
-        'vendor',
-        'node_modules',
-        'storage',
-        'tests',
-    ],
+    'exclude' => null,
 
     /*
     |--------------------------------------------------------------------------
-    | Analyzers
+    | Output Directory
     |--------------------------------------------------------------------------
-    | Enable or disable individual analyzers.
+    | Where exported analysis documents are written.
     */
-    'analyzers' => [
-        'routes' => true,
-    ],
+    'output_path' => storage_path('codeatlas'),
 
     /*
     |--------------------------------------------------------------------------
-    | Export
+    | Pretty Print
     |--------------------------------------------------------------------------
+    | Human-readable JSON output. Disable for smaller files.
     */
-    'export_path' => storage_path('codeatlas'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Web UI
-    |--------------------------------------------------------------------------
-    */
-    'ui_enabled' => env('CODEATLAS_UI_ENABLED', true),
-    'ui_route_prefix' => env('CODEATLAS_UI_PREFIX', 'codeatlas'),
-    'ui_middleware' => ['web'],
-
+    'pretty' => true,
 ];
