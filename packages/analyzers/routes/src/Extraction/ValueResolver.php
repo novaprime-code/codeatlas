@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Analyzers\Routes\Extraction;
 
-use CodeAtlas\Contracts\ParsedFileInterface;
+use CodeAtlas\Core\Parser\ParsedFile;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 
@@ -21,10 +22,14 @@ use PhpParser\Node\Scalar\String_;
  * extracts those literals without ever executing code (constitution: no
  * runtime evaluation). Dynamic expressions it cannot resolve return null,
  * and the caller decides how to degrade gracefully.
+ *
+ * We depend on the concrete ParsedFile (rather than ParsedFileInterface)
+ * because we need resolveClassName(), which the interface intentionally
+ * omits to keep the contracts package free of a PhpParser\Node import.
  */
 final class ValueResolver
 {
-    public function __construct(private readonly ParsedFileInterface $file) {}
+    public function __construct(private readonly ParsedFile $file) {}
 
     /**
      * Resolve an argument to a plain string, if it is a string literal.
@@ -90,7 +95,7 @@ final class ValueResolver
         }
 
         $constName = $expr->name;
-        if (!$constName instanceof \PhpParser\Node\Identifier || $constName->toString() !== 'class') {
+        if (!$constName instanceof Identifier || $constName->toString() !== 'class') {
             return null;
         }
 

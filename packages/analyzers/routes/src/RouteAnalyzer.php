@@ -11,7 +11,6 @@ use CodeAtlas\Contracts\Enums\EdgeType;
 use CodeAtlas\Contracts\Enums\FileType;
 use CodeAtlas\Contracts\Enums\NodeType;
 use CodeAtlas\Contracts\Enums\Severity;
-use CodeAtlas\Contracts\Exceptions\ParserException;
 use CodeAtlas\Contracts\Graph\Edge;
 use CodeAtlas\Contracts\Graph\Node;
 use CodeAtlas\Contracts\ParserInterface;
@@ -19,8 +18,10 @@ use CodeAtlas\Contracts\ValueObjects\AnalysisError;
 use CodeAtlas\Contracts\ValueObjects\AnalysisResult;
 use CodeAtlas\Contracts\ValueObjects\FileReference;
 use CodeAtlas\Contracts\ValueObjects\ProjectContext;
+use CodeAtlas\Core\Parser\ParsedFile;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Throwable;
 
 /**
  * Extracts Laravel routes from a project and emits graph nodes and edges.
@@ -33,9 +34,14 @@ use Psr\Log\NullLogger;
  *   - a Route → Controller edge (RoutesTo) when the handler is a controller
  *   - a Route → Middleware edge (UsesMiddleware) per applied middleware
  *
- * A malformed route file never aborts the run: the parse error is logged,
- * recorded as an AnalysisError, and the remaining files are still analyzed.
- * This is the constitution's fault-isolation guarantee, enforced per file.
+ * A malformed route file never aborts the run: the parse error is caught,
+ * logged, and recorded as an AnalysisError, and the remaining files are
+ * still analyzed. This is the constitution's fault-isolation guarantee,
+ * enforced per file. We catch \Throwable rather than a specific exception
+ * because the ParserInterface contract does not (currently) declare its
+ *
+ * @throws — anything that escapes the parser is a file we skip, not a run
+ *             we abort.
  */
 final class RouteAnalyzer implements AnalyzerInterface
 {
@@ -67,7 +73,7 @@ final class RouteAnalyzer implements AnalyzerInterface
             try {
                 $routes = $this->analyzeFile($file);
                 $filesAnalyzed++;
-            } catch (ParserException $e) {
+            } catch (Throwable $e) {
                 $filesSkipped++;
                 $this->logger->warning('Skipping unparseable route file {path}: {message}', [
                     'path' => $file->path,
@@ -110,6 +116,8 @@ final class RouteAnalyzer implements AnalyzerInterface
     private function analyzeFile(FileReference $file): array
     {
         $parsed = $this->parser->parse($file->absolutePath);
+        assert($parsed instanceof ParsedFile);
+
         $extractor = new RouteExtractor($parsed);
 
         return $extractor->extract($parsed->ast());

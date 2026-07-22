@@ -6,7 +6,7 @@ namespace CodeAtlas\Analyzers\Routes\Extraction;
 
 use CodeAtlas\Analyzers\Routes\DTOs\GroupContext;
 use CodeAtlas\Analyzers\Routes\DTOs\RouteData;
-use CodeAtlas\Contracts\ParsedFileInterface;
+use CodeAtlas\Core\Parser\ParsedFile;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
@@ -49,7 +49,7 @@ final class RouteExtractor
 
     private ActionResolver $actions;
 
-    public function __construct(private readonly ParsedFileInterface $file)
+    public function __construct(private readonly ParsedFile $file)
     {
         $this->unwinder = new ChainUnwinder();
         $this->values = new ValueResolver($file);
@@ -77,7 +77,7 @@ final class RouteExtractor
 
         foreach ($statements as $stmt) {
             if ($stmt instanceof Node\Stmt\Namespace_) {
-                $routes = [...$routes, ...$this->walk($stmt->stmts, $context)];
+                $routes = [...$routes, ...$this->walk(array_values($stmt->stmts), $context)];
 
                 continue;
             }
@@ -427,7 +427,7 @@ final class RouteExtractor
     {
         foreach ($args as $arg) {
             if ($arg->value instanceof Closure) {
-                return $arg->value->stmts;
+                return array_values($arg->value->stmts);
             }
             if ($arg->value instanceof ArrowFunction) {
                 return [new Expression($arg->value->expr)];
@@ -525,14 +525,14 @@ final class RouteExtractor
     /**
      * @return list<string>
      */
+    /**
+     * @return list<string>
+     */
     private function extractParameters(string $uri): array
     {
         preg_match_all('/\{(\w+)\??\}/', $uri, $matches);
 
-        /** @var list<string> $params */
-        $params = $matches[1];
-
-        return $params;
+        return $matches[1];
     }
 
     private function singularize(string $name): string

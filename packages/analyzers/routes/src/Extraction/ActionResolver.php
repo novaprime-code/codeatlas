@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Analyzers\Routes\Extraction;
 
-use CodeAtlas\Contracts\ParsedFileInterface;
+use CodeAtlas\Core\Parser\ParsedFile;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
@@ -24,11 +24,14 @@ use PhpParser\Node\Scalar\String_;
  * Anything unresolvable (a variable, a dynamic expression) yields a null
  * controller without marking the route a closure — the route still exists,
  * we just cannot statically name its handler.
+ *
+ * Typed against concrete ParsedFile for resolveClassName(); see the note
+ * on ValueResolver for the rationale.
  */
 final class ActionResolver
 {
     public function __construct(
-        private readonly ParsedFileInterface $file,
+        private readonly ParsedFile $file,
         private readonly ValueResolver $values,
     ) {}
 

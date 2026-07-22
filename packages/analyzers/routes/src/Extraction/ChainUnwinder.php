@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace CodeAtlas\Analyzers\Routes\Extraction;
 
+use PhpParser\Node\Arg;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
 
 /**
  * Flattens a fluent Route chain into an ordered list of operations.
@@ -22,13 +24,13 @@ use PhpParser\Node\Identifier;
  * source order (outermost static call first), so the extractor can reason
  * about them linearly instead of recursing through nested AST nodes.
  *
- * @phpstan-type Operation array{name: string, args: list<\PhpParser\Node\Arg>}
+ * @phpstan-type Operation array{name: string, args: list<Arg>}
  */
 final class ChainUnwinder
 {
     /**
-     * @return list<array{name: string, args: list<\PhpParser\Node\Arg>}>|null
-     *                                                                         Null when the expression is not a static-rooted call chain.
+     * @return list<array{name: string, args: list<Arg>}>|null
+     *                                                         Null when the expression is not a static-rooted Route chain.
      */
     public function unwind(Expr $expr): ?array
     {
@@ -48,13 +50,12 @@ final class ChainUnwinder
             return null;
         }
 
-        $operations = [];
-
         $rootName = $this->identifierName($current->name);
         if ($rootName === null) {
             return null;
         }
 
+        $operations = [];
         $operations[] = ['name' => $rootName, 'args' => $this->args($current->getArgs())];
 
         foreach (array_reverse($methodCalls) as $call) {
@@ -70,7 +71,7 @@ final class ChainUnwinder
 
     private function isRouteFacade(StaticCall $call): bool
     {
-        if (!$call->class instanceof \PhpParser\Node\Name) {
+        if (!$call->class instanceof Name) {
             return false;
         }
 
@@ -87,9 +88,9 @@ final class ChainUnwinder
     }
 
     /**
-     * @param array<int, \PhpParser\Node\Arg> $args
+     * @param array<Arg> $args
      *
-     * @return list<\PhpParser\Node\Arg>
+     * @return list<Arg>
      */
     private function args(array $args): array
     {
