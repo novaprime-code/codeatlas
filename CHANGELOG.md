@@ -7,27 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Phase 3 Route Analyzer (Sprint 3.1)
+
+- **RouteAnalyzer** (`CodeAtlas\Analyzers\Routes`): first working analyzer — extracts Laravel routes via AST and emits Route nodes plus Route→Controller and Route→Middleware edges
+- **RouteExtractor**: context-aware AST descent with a nested group-context stack (prefix concatenation, middleware accumulation, name prefixing, domain override)
+- **ChainUnwinder**: flattens fluent `Route::` method chains into ordered operations
+- **ValueResolver** / **ActionResolver**: extract literal URIs, middleware lists, and resolve controller/invokable/closure/string actions to fully-qualified names
+- **RouteData** / **RouteCollection** / **GroupContext** DTOs
+- **RouteAnalyzerPlugin**: container registration entry point
+- Supports: all HTTP verbs, `any`, `match`, `resource` (7 routes), `apiResource` (5 routes), fluent + array group styles, arbitrarily nested groups, `where`/`whereNumber`/`whereAlpha`/`whereUuid` constraints, and URI parameter extraction
+- Per-file fault isolation: a malformed route file is logged, recorded as an `AnalysisError`, and skipped without aborting the run
+- Fixtures for web/api/resource/malformed/empty plus a full integration Laravel app
+
 ### Added — Phase 2 Scanner (Sprint 2.1)
-
-- **Scanner** (`CodeAtlas\Scanner\Scanner`): top-level file discovery with path validation, ProjectContext assembly, and a `Scanner::default()` factory
-- **DirectoryWalker** (`CodeAtlas\Scanner\Discovery`): lazy Symfony Finder traversal with configurable paths, glob-based exclusions, and extension filtering
-- **FileClassifier** (`CodeAtlas\Scanner\Classification`): pure prefix-based path → FileType classification with support for custom overrides
-- **ComposerReader** + **ComposerMetadata** (`CodeAtlas\Scanner\Framework`): safe composer.json parsing with `tryRead` (missing = null) and `read` (missing/malformed = ScannerException)
-- **FrameworkDetector** + **FrameworkResult**: Laravel detection requires both `artisan` file AND `laravel/framework` in composer dependencies
-- Three fixture projects (minimal Laravel 11, empty, non-Laravel) with 22 discoverable files total
-- 5 test files covering classification, composer parsing, framework detection, and end-to-end scanner behaviour
-
-### Changed
-
-- `CodeAtlas\Contracts\ValueObjects\ScanConfig::default()` now includes `resources` in scan paths, per ARCHITECTURE.md's discovery list — Blade views were previously missed
-- `CodeAtlas\Contracts\Exceptions\ScannerException` gains `composerNotReadable()` and `composerInvalidJson()` named constructors
+- Scanner, DirectoryWalker, FileClassifier, ComposerReader, FrameworkDetector
 
 ### Added — Phase 1 Core (Sprint 1.2)
-- Container, Config, EventBus, Logger, PhpParser (with grouped-use support), PluginLoader, PipelineRunner
-- 25 test files across 8 subsystems
+- Container, Config, EventBus, Logger, PhpParser, PluginLoader, PipelineRunner
 
 ### Added — Phase 1 Contracts (Sprint 1.1)
-- 8 interfaces, 4 enums, 6 graph primitives, 7 value objects, 8-class exception hierarchy
+- Interfaces, enums, graph primitives, value objects, exception hierarchy
 
 ### Added — Phase 0 Infrastructure (Sprint 0.1)
-- Full monorepo scaffolding, tooling, CI, git hooks, project management setup
+- Monorepo scaffolding, tooling, CI, git hooks, project management setup

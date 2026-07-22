@@ -1,0 +1,3 @@
+<?php
+
+// No routes here, just a comment.
