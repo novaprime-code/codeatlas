@@ -44,7 +44,7 @@
             "CodeAtlas\\Exporters\\Json\\Tests\\": "packages/exporters/json/tests/"
         },
         "exclude-from-classmap": [
-            "packages/scanner/tests/Fixtures/"
+            "packages/**/tests/Fixtures/"
         ]
     },
     "repositories": [
