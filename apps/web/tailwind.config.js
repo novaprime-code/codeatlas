@@ -17,6 +17,11 @@ export default {
           'text-muted': 'var(--atlas-text-muted)',
           accent: 'var(--atlas-accent)',
           'accent-hover': 'var(--atlas-accent-hover)',
+          'accent-subtle': 'var(--atlas-accent-subtle)',
+          success: 'var(--atlas-success)',
+          warning: 'var(--atlas-warning)',
+          error: 'var(--atlas-error)',
+          info: 'var(--atlas-info)',
         },
         node: {
           route: '#3b82f6',

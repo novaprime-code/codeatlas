@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   /* Light theme */
   --atlas-bg-primary: #ffffff;
@@ -17,6 +16,10 @@
   --atlas-accent: #6366f1;
   --atlas-accent-hover: #818cf8;
   --atlas-accent-subtle: #6366f120;
+  --atlas-success: #22c55e;
+  --atlas-warning: #f59e0b;
+  --atlas-error: #ef4444;
+  --atlas-info: #3b82f6;
 }
 
 .dark {

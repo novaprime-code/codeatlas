@@ -1,65 +1,52 @@
-import type { ReactElement } from 'react';
+import { ReactFlowProvider } from '@xyflow/react';
 
-/**
- * Phase 0 app shell.
- *
- * This is intentionally a static skeleton — the three-panel layout
- * (sidebar / canvas / inspector) from UI_GUIDELINES.md, with no
- * graph logic yet. Phase 4 replaces the placeholders with the
- * real Sidebar, GraphCanvas (React Flow), and Inspector components.
- */
-export default function App(): ReactElement {
+import { GraphCanvas } from './components/graph/GraphCanvas';
+import { Inspector } from './components/inspector/Inspector';
+import { LoadScreen } from './components/LoadScreen';
+import { Sidebar } from './components/sidebar/Sidebar';
+import { useAnalysisStore } from './stores/analysisStore';
+import { useUiStore } from './stores/uiStore';
+
+export default function App(): React.JSX.Element {
+  const document = useAnalysisStore((s) => s.document);
+  const clear = useAnalysisStore((s) => s.clear);
+  const theme = useUiStore((s) => s.theme);
+
   return (
-    <div className="flex h-screen flex-col">
-      {/* Toolbar */}
-      <header className="flex h-12 items-center justify-between border-b border-atlas-border bg-atlas-bg-secondary px-4">
-        <div className="flex items-center gap-2">
-          <img src="/atlas.svg" alt="" className="h-6 w-6" />
-          <span className="font-semibold">CodeAtlas</span>
-          <span className="rounded bg-atlas-bg-tertiary px-1.5 py-0.5 text-xs text-atlas-text-muted">
-            v0.0.1
-          </span>
-        </div>
-        <div className="text-xs text-atlas-text-muted">Phase 0 — Infrastructure</div>
-      </header>
+    <div className={theme === 'dark' ? 'dark' : ''}>
+      <div className="flex h-screen flex-col bg-atlas-bg-primary text-atlas-text-primary">
+        <header className="flex h-11 items-center gap-3 border-b border-atlas-border bg-atlas-bg-secondary px-4">
+          <h1 className="text-sm font-semibold tracking-wide">CodeAtlas</h1>
+          {document !== null && (
+            <>
+              <span className="text-xs text-atlas-text-muted">
+                {document.project.name ?? 'unnamed project'}
+                {document.project.framework !== null &&
+                  ` · ${document.project.framework} ${document.project.framework_version ?? ''}`}
+              </span>
+              <button
+                type="button"
+                onClick={clear}
+                className="ml-auto rounded border border-atlas-border px-2 py-0.5 text-xs text-atlas-text-secondary hover:bg-atlas-bg-tertiary"
+              >
+                Load another
+              </button>
+            </>
+          )}
+        </header>
 
-      {/* Main area */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <aside className="w-60 shrink-0 border-r border-atlas-border bg-atlas-bg-secondary p-3">
-          <div className="text-xs font-medium uppercase tracking-wide text-atlas-text-muted">
-            Explorer
-          </div>
-          <div className="mt-2 text-sm text-atlas-text-secondary">
-            Analyzers will appear here after Phase 4.
-          </div>
-        </aside>
-
-        {/* Canvas */}
-        <main className="flex flex-1 items-center justify-center bg-atlas-bg-primary">
-          <div className="text-center">
-            <div className="text-lg font-semibold">Graph canvas</div>
-            <div className="mt-1 text-sm text-atlas-text-secondary">
-              React Flow mounts here in Phase 4.
-            </div>
-          </div>
+        <main className="flex min-h-0 flex-1">
+          {document === null ? (
+            <LoadScreen />
+          ) : (
+            <ReactFlowProvider>
+              <Sidebar />
+              <GraphCanvas />
+              <Inspector />
+            </ReactFlowProvider>
+          )}
         </main>
-
-        {/* Inspector */}
-        <aside className="w-80 shrink-0 border-l border-atlas-border bg-atlas-bg-secondary p-3">
-          <div className="text-xs font-medium uppercase tracking-wide text-atlas-text-muted">
-            Inspector
-          </div>
-          <div className="mt-2 text-sm text-atlas-text-secondary">
-            Select a node to see its properties.
-          </div>
-        </aside>
       </div>
-
-      {/* Console */}
-      <footer className="h-8 border-t border-atlas-border bg-atlas-bg-secondary px-4 text-xs leading-8 text-atlas-text-muted">
-        Ready
-      </footer>
     </div>
   );
 }
