@@ -7,6 +7,7 @@ use CodeAtlas\Core\Container\Container;
 use CodeAtlas\Core\Tests\Fixtures\Container\CircularA;
 use CodeAtlas\Core\Tests\Fixtures\Container\InMemoryRepository;
 use CodeAtlas\Core\Tests\Fixtures\Container\OptionalDep;
+use CodeAtlas\Core\Tests\Fixtures\Container\OptionalUnresolvableDep;
 use CodeAtlas\Core\Tests\Fixtures\Container\RepositoryInterface;
 use CodeAtlas\Core\Tests\Fixtures\Container\SimpleService;
 use CodeAtlas\Core\Tests\Fixtures\Container\UnresolvableService;
@@ -134,9 +135,14 @@ describe('Container — tagged bindings', function (): void {
 
 describe('Container — optional class-typed parameters', function (): void {
     it('falls back to default when an optional class param is unresolvable', function (): void {
-        // PhpParser has `?Parser $parser = null` — Parser is an unbound interface
         $c = new Container();
-        $parser = $c->make(CodeAtlas\Core\Parser\PhpParser::class);
-        expect($parser)->toBeInstanceOf(CodeAtlas\Core\Parser\PhpParser::class);
+        $dep = $c->make(OptionalUnresolvableDep::class);
+
+        expect($dep->repository)->toBeNull();
     });
+
+    it('still throws when a required class param is unresolvable', function (): void {
+        $c = new Container();
+        $c->make(UserService::class);
+    })->throws(ContainerException::class, 'No binding registered for');
 });
