@@ -10,7 +10,7 @@ use CodeAtlas\Exporters\Json\JsonExporter;
 use CodeAtlas\Laravel\AnalysisWriter;
 use CodeAtlas\Laravel\CodeAtlasFactory;
 use Illuminate\Console\Command;
-use Throwable;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 /**
  * php artisan codeatlas:analyze
@@ -21,6 +21,10 @@ use Throwable;
  */
 final class AnalyzeCommand extends Command
 {
+    public function __construct(private readonly ConfigRepository $config)
+    {
+        parent::__construct();
+    }
     protected $signature = 'codeatlas:analyze
         {--analyzer=* : Only run the named analyzers (e.g. --analyzer=routes)}
         {--output= : Override the output directory}
@@ -48,10 +52,10 @@ final class AnalyzeCommand extends Command
                 analyzerFilter: $filter,
                 exporters: [JsonExporter::class],
                 exportConfig: new ExportConfig(
-                    prettyPrint: $this->option('compact') ? false : (bool) config('codeatlas.pretty', true),
+                    prettyPrint: $this->option('compact') ? false : (bool) $this->config->get('codeatlas.pretty', true),
                 ),
             );
-        } catch (Throwable $e) {
+        } catch (\CodeAtlas\Contracts\Exceptions\ScannerException $e) {
             $this->components->error("Analysis failed: {$e->getMessage()}");
 
             return self::FAILURE;
@@ -83,7 +87,7 @@ final class AnalyzeCommand extends Command
         }
 
         /** @var string $configured */
-        $configured = config('codeatlas.output_path', storage_path('codeatlas'));
+        $configured = $this->config->get('codeatlas.output_path', $this->laravel->storagePath('codeatlas'));
 
         return $configured;
     }
@@ -91,9 +95,9 @@ final class AnalyzeCommand extends Command
     private function scanConfig(): ?ScanConfig
     {
         /** @var list<string>|null $paths */
-        $paths = config('codeatlas.scan_paths');
+        $paths = $this->config->get('codeatlas.scan_paths');
         /** @var list<string>|null $exclude */
-        $exclude = config('codeatlas.exclude');
+        $exclude = $this->config->get('codeatlas.exclude');
 
         if ($paths === null && $exclude === null) {
             return null;

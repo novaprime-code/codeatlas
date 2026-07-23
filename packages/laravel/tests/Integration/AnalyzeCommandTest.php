@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use CodeAtlas\Laravel\Tests\TestbenchCase;
+
+uses(TestbenchCase::class);
+
+
 /*
  * Orchestra Testbench integration tests.
  *

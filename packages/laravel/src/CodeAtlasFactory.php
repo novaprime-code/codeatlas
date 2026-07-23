@@ -17,6 +17,8 @@ use CodeAtlas\Core\Plugin\PluginLoader;
 use CodeAtlas\Exporters\Json\JsonExporter;
 use CodeAtlas\Exporters\Json\JsonExporterPlugin;
 use CodeAtlas\Scanner\Scanner;
+use PhpParser\Parser as NikicParser;
+use PhpParser\ParserFactory as NikicParserFactory;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -44,6 +46,13 @@ final class CodeAtlasFactory
         $container = new Container();
         $container->instance(ContainerInterface::class, $container);
         $container->instance(LoggerInterface::class, $logger);
+
+        // nikic/php-parser: Parser is an interface. Bind it to the factory
+        // so the CodeAtlas parser wrapper's constructor dependency resolves.
+        $container->singleton(
+            NikicParser::class,
+            static fn(): NikicParser => (new NikicParserFactory())->createForNewestSupportedVersion(),
+        );
 
         $container->singleton(ParserInterface::class, PhpParser::class);
         $container->singleton(ScannerInterface::class, static fn(): Scanner => Scanner::default());

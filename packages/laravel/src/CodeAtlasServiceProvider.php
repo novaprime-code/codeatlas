@@ -29,7 +29,7 @@ final class CodeAtlasServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__ . '/../config/codeatlas.php' => config_path('codeatlas.php'),
+            __DIR__ . '/../config/codeatlas.php' => $this->app->configPath('codeatlas.php'),
         ], 'codeatlas-config');
 
         $this->commands([

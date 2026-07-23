@@ -52,6 +52,8 @@ final class PipelineRunner
      *
      * @param list<string>|null $analyzerFilter Machine names to include; null = all
      * @param list<class-string<ExporterInterface>> $exporters Exporters to invoke
+     *
+     * @throws \CodeAtlas\Contracts\Exceptions\ScannerException when the project path is missing, not a directory, or unreadable
      */
     public function run(
         string $projectPath,
@@ -79,6 +81,9 @@ final class PipelineRunner
         return $pipeline;
     }
 
+    /**
+     * @throws \CodeAtlas\Contracts\Exceptions\ScannerException
+     */
     private function scan(string $path, ?ScanConfig $config): ProjectContext
     {
         $this->events->dispatch(Events::SCAN_STARTED, $path);
