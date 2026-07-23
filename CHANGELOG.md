@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Phase 4 Web UI MVP (Sprint 4.2)
+
+- **LoadScreen**: drag-and-drop or file-picker loading of `codeatlas-analysis.json` with human-readable validation errors
+- **Document loader** with schema-version negotiation: rejects unsupported future majors, accepts newer minors, per JSON_SCHEMA.md versioning rules
+- **Sidebar**: graph nodes grouped by type with counts, live search, collapsible sections, and click-to-select
+- **GraphCanvas**: React Flow canvas with custom `AtlasNode` (UI_GUIDELINES node colors, accent borders), deterministic columnar layout, minimap, controls, and select-to-center
+- **Placeholder-node synthesis**: edge endpoints without real nodes (e.g. controllers before the controller analyzer exists) are derived from the `{type}::{qualifier}` ID convention and rendered as ghosts — every edge is always renderable
+- **Inspector**: typed route detail view (URI, methods, name, controller, action, middleware, parameters, where-constraints, file) with incoming/outgoing connections, plus a generic metadata fallback for other node types
+- TypeScript types synchronized with actual backend output (nullable fields, `absolute_path`, route metadata shape)
+- UI test fixture is genuine PHP-pipeline output, not handwritten JSON
+- 26 Vitest tests (loader, layout, sidebar, inspector, load screen, app shell)
+
 ### Added — Phase 4 Laravel Bridge (Sprint 4.1)
 
 - **CodeAtlasFactory** (`CodeAtlas\Laravel`): framework-free composition root wiring container, parser, scanner, all bundled plugins, and a ready `PipelineRunner` — reusable by any future framework bundle or CLI binary
@@ -22,7 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **PipelineRunner** now enriches the `ExportConfig` with project metadata (from the scanned `ProjectContext`) and elapsed duration before invoking exporters; caller-provided options win on conflict
 - **Container**: optional class-typed constructor parameters (e.g. `?Parser $parser = null`) now fall back to their default value when the type cannot be resolved, instead of throwing
 
-
 ### Added — Phase 3 JSON Exporter (Sprint 3.2)
 
 - **JsonExporter** (`CodeAtlas\Exporters\Json`): the canonical exporter producing the complete JSON_SCHEMA.md document — `$schema`, `version`, `project`, `analysis`, `graph`, `results`, `errors`
@@ -37,16 +48,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **The backend pipeline is complete: Source → Scanner → AST → Analyzer → DTO → JSON.**
 
 ### Added — Phase 3 Route Analyzer (Sprint 3.1)
+
 - RouteAnalyzer with full group/resource/closure support, fault isolation, graph output
 
 ### Added — Phase 2 Scanner (Sprint 2.1)
+
 - Scanner, DirectoryWalker, FileClassifier, ComposerReader, FrameworkDetector
 
 ### Added — Phase 1 Core (Sprint 1.2)
+
 - Container, Config, EventBus, Logger, PhpParser, PluginLoader, PipelineRunner
 
 ### Added — Phase 1 Contracts (Sprint 1.1)
+
 - Interfaces, enums, graph primitives, value objects, exception hierarchy
 
 ### Added — Phase 0 Infrastructure (Sprint 0.1)
+
 - Monorepo scaffolding, tooling, CI, git hooks, project management setup

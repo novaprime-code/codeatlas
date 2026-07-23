@@ -131,3 +131,12 @@ describe('Container — tagged bindings', function (): void {
         expect((new Container())->tagged('nothing'))->toBe([]);
     });
 });
+
+describe('Container — optional class-typed parameters', function (): void {
+    it('falls back to default when an optional class param is unresolvable', function (): void {
+        // PhpParser has `?Parser $parser = null` — Parser is an unbound interface
+        $c = new Container();
+        $parser = $c->make(CodeAtlas\Core\Parser\PhpParser::class);
+        expect($parser)->toBeInstanceOf(CodeAtlas\Core\Parser\PhpParser::class);
+    });
+});
