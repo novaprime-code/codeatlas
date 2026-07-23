@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Phase 4 Laravel Bridge (Sprint 4.1)
+
+- **CodeAtlasFactory** (`CodeAtlas\Laravel`): framework-free composition root wiring container, parser, scanner, all bundled plugins, and a ready `PipelineRunner` — reusable by any future framework bundle or CLI binary
+- **CodeAtlasServiceProvider**: thin Laravel entry point (config merge, publish tag `codeatlas-config`, command registration, package auto-discovery)
+- **`codeatlas:analyze`** artisan command with `--analyzer` filter, `--output` override, and `--compact` flag
+- **`codeatlas:scan`** artisan command for discovery-only dry runs
+- **AnalysisWriter**: framework-free disk writer for exporter outputs with auto-created directories
+- Publishable `config/codeatlas.php` (scan paths, exclusions, output path, pretty-print)
+- Orchestra Testbench integration test suite
+
+### Changed
+
+- **PipelineRunner** now enriches the `ExportConfig` with project metadata (from the scanned `ProjectContext`) and elapsed duration before invoking exporters; caller-provided options win on conflict
+- **Container**: optional class-typed constructor parameters (e.g. `?Parser $parser = null`) now fall back to their default value when the type cannot be resolved, instead of throwing
+
+
 ### Added — Phase 3 JSON Exporter (Sprint 3.2)
 
 - **JsonExporter** (`CodeAtlas\Exporters\Json`): the canonical exporter producing the complete JSON_SCHEMA.md document — `$schema`, `version`, `project`, `analysis`, `graph`, `results`, `errors`

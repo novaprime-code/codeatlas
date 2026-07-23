@@ -2,8 +2,4 @@
 
 declare(strict_types=1);
 
-/*
-|--------------------------------------------------------------------------
-| Pest Configuration — codeatlas/laravel
-|--------------------------------------------------------------------------
-*/
+uses(CodeAtlas\Laravel\Tests\TestbenchCase::class)->in('Integration');

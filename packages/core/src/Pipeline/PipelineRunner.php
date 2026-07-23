@@ -52,6 +52,8 @@ final class PipelineRunner
      *
      * @param list<string>|null $analyzerFilter Machine names to include; null = all
      * @param list<class-string<ExporterInterface>> $exporters Exporters to invoke
+     *
+     * @throws \CodeAtlas\Contracts\Exceptions\ScannerException when the project path is missing, not a directory, or unreadable
      */
     public function run(
         string $projectPath,
@@ -66,7 +68,10 @@ final class PipelineRunner
         $context = $this->scan($projectPath, $scanConfig);
         $results = $this->analyze($context, $analyzerFilter);
         $graph = $this->mergeIntoGraph($results);
-        $exports = $this->export($results, $graph, $exporters, $exportConfig ?? ExportConfig::default());
+
+        $durationSoFar = (int) round((microtime(true) - $startedAt) * 1000);
+        $enrichedConfig = $this->enrichExportConfig($exportConfig ?? ExportConfig::default(), $context, $durationSoFar);
+        $exports = $this->export($results, $graph, $exporters, $enrichedConfig);
 
         $durationMs = (int) round((microtime(true) - $startedAt) * 1000);
         $pipeline = new PipelineResult($context, $results, $graph, $exports, $durationMs);
@@ -76,6 +81,9 @@ final class PipelineRunner
         return $pipeline;
     }
 
+    /**
+     * @throws \CodeAtlas\Contracts\Exceptions\ScannerException
+     */
     private function scan(string $path, ?ScanConfig $config): ProjectContext
     {
         $this->events->dispatch(Events::SCAN_STARTED, $path);
@@ -151,6 +159,34 @@ final class PipelineRunner
         }
 
         return $graph;
+    }
+
+    /**
+     * Inject project metadata and elapsed duration into the export config.
+     *
+     * Exporters only receive an AnalysisResult, but the JSON schema's
+     * project block needs ProjectContext data — which exists only after
+     * scanning. The runner is the single component holding both, so it
+     * merges them here. Caller-provided options always win on conflict.
+     */
+    private function enrichExportConfig(ExportConfig $config, ProjectContext $context, int $durationMs): ExportConfig
+    {
+        $projectOptions = [
+            'project' => [
+                'name' => $context->name,
+                'path' => $context->path,
+                'framework' => $context->framework,
+                'framework_version' => $context->frameworkVersion,
+                'php_version' => $context->phpVersion,
+            ],
+            'duration_ms' => $durationMs,
+        ];
+
+        return new ExportConfig(
+            prettyPrint: $config->prettyPrint,
+            outputPath: $config->outputPath,
+            options: array_merge($projectOptions, $config->options),
+        );
     }
 
     /**
