@@ -47,18 +47,40 @@ export type EdgeType =
 
 export interface FileReference {
   path: string;
-  line_start: number;
-  line_end: number;
+  absolute_path?: string;
+  type?: string;
+  line_start: number | null;
+  line_end: number | null;
 }
 
 export interface AnalysisNode {
   id: string;
   type: NodeType;
   label: string;
-  group?: string;
-  file?: FileReference;
+  group: string | null;
+  file: FileReference | null;
   metadata: Record<string, unknown>;
-  tags?: string[];
+  tags: string[];
+}
+
+/** Route analyzer node metadata (JSON_SCHEMA.md routes result). */
+export interface RouteMetadata {
+  uri: string;
+  methods: string[];
+  name: string | null;
+  controller: string | null;
+  action: string | null;
+  is_closure: boolean;
+  middleware: string[];
+  prefix: string | null;
+  domain: string | null;
+  where: Record<string, string>;
+  parameters: string[];
+  line: number | null;
+}
+
+export function isRouteMetadata(m: Record<string, unknown>): m is Record<string, unknown> & RouteMetadata {
+  return typeof m['uri'] === 'string' && Array.isArray(m['methods']);
 }
 
 export interface AnalysisEdge {
@@ -66,8 +88,8 @@ export interface AnalysisEdge {
   source: string;
   target: string;
   type: EdgeType;
-  label?: string;
-  metadata?: Record<string, unknown>;
+  label: string | null;
+  metadata: Record<string, unknown>;
 }
 
 export interface AnalysisError {
@@ -83,11 +105,11 @@ export interface AnalysisDocument {
   $schema: string;
   version: string;
   project: {
-    name: string;
-    path: string;
-    framework: string;
-    framework_version: string;
-    php_version: string;
+    name: string | null;
+    path: string | null;
+    framework: string | null;
+    framework_version: string | null;
+    php_version: string | null;
   };
   analysis: {
     timestamp: string;

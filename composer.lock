@@ -231,7 +231,7 @@
         },
         {
             "name": "codeatlas/analyzer-routes",
-            "version": "dev-feat/sprint-4.1-laravel-bridge",
+            "version": "dev-feat/sprint-4.2-web-ui-mvp",
             "dist": {
                 "type": "path",
                 "url": "packages/analyzers/routes",
@@ -279,7 +279,7 @@
         },
         {
             "name": "codeatlas/contracts",
-            "version": "dev-feat/sprint-4.1-laravel-bridge",
+            "version": "dev-feat/sprint-4.2-web-ui-mvp",
             "dist": {
                 "type": "path",
                 "url": "packages/contracts",
@@ -324,7 +324,7 @@
         },
         {
             "name": "codeatlas/core",
-            "version": "dev-feat/sprint-4.1-laravel-bridge",
+            "version": "dev-feat/sprint-4.2-web-ui-mvp",
             "dist": {
                 "type": "path",
                 "url": "packages/core",
@@ -373,7 +373,7 @@
         },
         {
             "name": "codeatlas/exporter-json",
-            "version": "dev-feat/sprint-4.1-laravel-bridge",
+            "version": "dev-feat/sprint-4.2-web-ui-mvp",
             "dist": {
                 "type": "path",
                 "url": "packages/exporters/json",
@@ -424,7 +424,7 @@
         },
         {
             "name": "codeatlas/laravel",
-            "version": "dev-feat/sprint-4.1-laravel-bridge",
+            "version": "dev-feat/sprint-4.2-web-ui-mvp",
             "dist": {
                 "type": "path",
                 "url": "packages/laravel",
@@ -485,7 +485,7 @@
         },
         {
             "name": "codeatlas/scanner",
-            "version": "dev-feat/sprint-4.1-laravel-bridge",
+            "version": "dev-feat/sprint-4.2-web-ui-mvp",
             "dist": {
                 "type": "path",
                 "url": "packages/scanner",

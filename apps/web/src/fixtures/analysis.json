@@ -1,0 +1,204 @@
+{
+    "$schema": "https://codeatlas.dev/schema/v1/analysis.json",
+    "version": "1.0.0",
+    "project": {
+        "name": "demo/integration-app",
+        "path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app",
+        "framework": "laravel",
+        "framework_version": "^11.0",
+        "php_version": "^8.3"
+    },
+    "analysis": {
+        "timestamp": "2026-07-11T21:18:45+00:00",
+        "duration_ms": 107,
+        "analyzers": [
+            "routes"
+        ]
+    },
+    "graph": {
+        "nodes": [
+            {
+                "id": "route::get::/",
+                "type": "route",
+                "label": "GET /",
+                "group": null,
+                "file": {
+                    "path": "routes/web.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app/routes/web.php",
+                    "type": "route",
+                    "line_start": 6,
+                    "line_end": null
+                },
+                "metadata": {
+                    "uri": "/",
+                    "methods": [
+                        "GET"
+                    ],
+                    "name": null,
+                    "controller": null,
+                    "action": null,
+                    "is_closure": true,
+                    "middleware": [],
+                    "prefix": null,
+                    "domain": null,
+                    "where": {},
+                    "parameters": [],
+                    "line": 6
+                },
+                "tags": [
+                    "closure"
+                ]
+            },
+            {
+                "id": "route::get::/users",
+                "type": "route",
+                "label": "GET /users",
+                "group": null,
+                "file": {
+                    "path": "routes/web.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app/routes/web.php",
+                    "type": "route",
+                    "line_start": 7,
+                    "line_end": null
+                },
+                "metadata": {
+                    "uri": "/users",
+                    "methods": [
+                        "GET"
+                    ],
+                    "name": "users.index",
+                    "controller": "App\\Http\\Controllers\\UserController",
+                    "action": "index",
+                    "is_closure": false,
+                    "middleware": [
+                        "auth"
+                    ],
+                    "prefix": null,
+                    "domain": null,
+                    "where": {},
+                    "parameters": [],
+                    "line": 7
+                },
+                "tags": [
+                    "has-middleware",
+                    "named"
+                ]
+            },
+            {
+                "id": "route::post::/users",
+                "type": "route",
+                "label": "POST /users",
+                "group": null,
+                "file": {
+                    "path": "routes/web.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app/routes/web.php",
+                    "type": "route",
+                    "line_start": 8,
+                    "line_end": null
+                },
+                "metadata": {
+                    "uri": "/users",
+                    "methods": [
+                        "POST"
+                    ],
+                    "name": null,
+                    "controller": "App\\Http\\Controllers\\UserController",
+                    "action": "store",
+                    "is_closure": false,
+                    "middleware": [],
+                    "prefix": null,
+                    "domain": null,
+                    "where": {},
+                    "parameters": [],
+                    "line": 8
+                },
+                "tags": []
+            },
+            {
+                "id": "route::get::/api/users",
+                "type": "route",
+                "label": "GET /api/users",
+                "group": "api",
+                "file": {
+                    "path": "routes/api.php",
+                    "absolute_path": "/home/claude/codeatlas/packages/analyzers/routes/tests/Fixtures/integration-app/routes/api.php",
+                    "type": "route",
+                    "line_start": 7,
+                    "line_end": null
+                },
+                "metadata": {
+                    "uri": "/api/users",
+                    "methods": [
+                        "GET"
+                    ],
+                    "name": "api.users",
+                    "controller": "App\\Http\\Controllers\\UserController",
+                    "action": "index",
+                    "is_closure": false,
+                    "middleware": [
+                        "api"
+                    ],
+                    "prefix": "api",
+                    "domain": null,
+                    "where": {},
+                    "parameters": [],
+                    "line": 7
+                },
+                "tags": [
+                    "has-middleware",
+                    "named"
+                ]
+            }
+        ],
+        "edges": [
+            {
+                "id": "edge::routes_to::route::get::/users->controller::App\\Http\\Controllers\\UserController",
+                "source": "route::get::/users",
+                "target": "controller::App\\Http\\Controllers\\UserController",
+                "type": "routes_to",
+                "label": "index",
+                "metadata": {}
+            },
+            {
+                "id": "edge::uses_middleware::route::get::/users->middleware::auth",
+                "source": "route::get::/users",
+                "target": "middleware::auth",
+                "type": "uses_middleware",
+                "label": null,
+                "metadata": {}
+            },
+            {
+                "id": "edge::routes_to::route::post::/users->controller::App\\Http\\Controllers\\UserController",
+                "source": "route::post::/users",
+                "target": "controller::App\\Http\\Controllers\\UserController",
+                "type": "routes_to",
+                "label": "store",
+                "metadata": {}
+            },
+            {
+                "id": "edge::routes_to::route::get::/api/users->controller::App\\Http\\Controllers\\UserController",
+                "source": "route::get::/api/users",
+                "target": "controller::App\\Http\\Controllers\\UserController",
+                "type": "routes_to",
+                "label": "index",
+                "metadata": {}
+            },
+            {
+                "id": "edge::uses_middleware::route::get::/api/users->middleware::api",
+                "source": "route::get::/api/users",
+                "target": "middleware::api",
+                "type": "uses_middleware",
+                "label": null,
+                "metadata": {}
+            }
+        ]
+    },
+    "results": {
+        "routes": {
+            "routes": 4,
+            "files_analyzed": 2,
+            "files_skipped": 0
+        }
+    },
+    "errors": []
+}

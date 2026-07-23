@@ -174,15 +174,32 @@ final class Container implements ContainerInterface
     /**
      * @param class-string $forClass
      */
+
     private function resolveParameter(ReflectionParameter $param, string $forClass): mixed
     {
         $type = $param->getType();
 
-        if ($type instanceof ReflectionNamedType && !$type->isBuiltin()) {
+        if ($type instanceof ReflectionNamedType && ! $type->isBuiltin()) {
             /** @var class-string $className */
             $className = $type->getName();
 
-            return $this->make($className);
+            try {
+                return $this->make($className);
+            } catch (ContainerException $e) {
+                if ($param->isDefaultValueAvailable()) {
+                    try {
+                        return $param->getDefaultValue();
+                    } catch (ReflectionException) {
+                        throw $e;
+                    }
+                }
+
+                if ($param->allowsNull()) {
+                    return null;
+                }
+
+                throw $e;
+            }
         }
 
         if ($param->isDefaultValueAvailable()) {
